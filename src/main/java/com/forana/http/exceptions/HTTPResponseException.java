@@ -1,0 +1,14 @@
+package com.forana.http.exceptions;
+
+/**
+ * Exception that wraps exceptions occurring in the HTTPls response flow.
+ * 
+ * @author forana
+ */
+public class HTTPResponseException extends HTTPException {
+    private static final long serialVersionUID = 1L;
+
+    public HTTPResponseException(Throwable cause) {
+        super(cause);
+    }
+}
