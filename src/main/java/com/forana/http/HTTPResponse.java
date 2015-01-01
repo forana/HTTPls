@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -20,14 +21,16 @@ import com.forana.http.exceptions.HTTPResponseException;
  */
 public class HTTPResponse {
     private final CloseableHttpResponse response;
+    private final CloseableHttpClient client;
 
     /**
      * Should not be called directly.
      * 
      * @param response The response that this wraps.
      */
-    protected HTTPResponse(CloseableHttpResponse response) {
+    protected HTTPResponse(CloseableHttpResponse response, CloseableHttpClient client) {
         this.response = response;
+        this.client = client;
     }
 
     /**
@@ -37,6 +40,7 @@ public class HTTPResponse {
      */
     public void close() throws IOException {
         response.close();
+        client.close();
     }
 
     /**
@@ -72,7 +76,7 @@ public class HTTPResponse {
      * Convenience helper that checks if the response has a body.
      */
     public boolean hasBody() {
-        return response.getEntity() == null;
+        return response.getEntity() != null;
     }
 
     /**

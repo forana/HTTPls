@@ -1,5 +1,6 @@
 package com.forana.http;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Map;
 public class HTTPRequestFactory {
     private String urlBase;
 
-    private Map<String, String> defaultHeaders;
+    private Map<String, String> defaultHeaders = new HashMap<>();
 
     /**
      * Initializes a factory with no base URL.
@@ -42,6 +43,24 @@ public class HTTPRequestFactory {
      */
     protected HTTPRequest customize(HTTPRequest request) {
         return request;
+    }
+
+    /**
+     * Adds a header to each request created by this factory, effectively calling <code>
+     * request.header(name, value) for each.
+     * 
+     * Duplicate headers are not supported - subsequent calls with the same name will replace the
+     * previous call's value. According to the HTTP spec, duplicate headers are allowed only if the
+     * combined values are semantically identical to a comma-separated list of the values. If such a
+     * thing is needed, you must combine the values manually.
+     * 
+     * @param name
+     * @param value
+     * @return this
+     */
+    public HTTPRequestFactory addDefaultHeader(String name, String value) {
+        defaultHeaders.put(name, value);
+        return this;
     }
 
     private HTTPRequest populateHeaders(HTTPRequest request) {

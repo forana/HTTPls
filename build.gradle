@@ -22,5 +22,6 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.3.6'
     compile 'org.apache.httpcomponents:httpmime:4.3.6'
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-    
+
+    testCompile 'junit:junit:4.11'
 }

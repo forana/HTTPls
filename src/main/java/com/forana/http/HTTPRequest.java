@@ -201,7 +201,9 @@ public class HTTPRequest {
                 request.addHeader(entry.getKey(), entry.getValue());
             }
             
-            return new HTTPResponse(client.execute(request));
+            HTTPResponse response = new HTTPResponse(client.execute(request), client);
+            client = null;
+            return response;
         } catch (IOException e) {
             throw new HTTPRequestException(e);
         } finally {
