@@ -3,7 +3,12 @@ package com.forana.http;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
 
 import com.forana.http.exceptions.HTTPException;
@@ -67,5 +72,33 @@ public class HTTPRequestTest {
         HTTPls.get("http://httpbin.org/get?a=4&42=")
                 .setEncoding("ASCII")
                 .sendAndVerify();
+    }
+
+    @Test
+    public void testHeader() throws HTTPException {
+        JsonNode headers = HTTPls.get("http://httpbin.org/headers")
+                .header("X-Thing", "thing")
+                .sendAndVerify()
+                .getJSON()
+                .get("headers");
+        assertEquals("thing", headers.get("X-Thing").asText());
+    }
+
+    @Test
+    public void testJSONBody() throws HTTPException, IOException {
+        ObjectNode sentBody = new ObjectNode(JsonNodeFactory.instance);
+        sentBody.put("6x9", "42");
+        String receivedBodyText = HTTPls.post("http://httpbin.org/post")
+                .header("Accept", "application/json")
+                .body(sentBody)
+                .sendAndVerify()
+                .getJSON()
+                .get("data")
+                .asText();
+
+        JsonNode receivedBody = new ObjectMapper()
+                .readTree(receivedBodyText);
+
+        assertEquals(sentBody.get("6x9").asText(), receivedBody.get("6x9").asText());
     }
 }

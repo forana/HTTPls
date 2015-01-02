@@ -15,15 +15,15 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.forana.http.exceptions.HTTPRequestException;
 import com.forana.http.exceptions.HTTPResponseException;
@@ -50,6 +50,8 @@ public class HTTPRequest {
     private List<NameValuePair> parameters;
 
     private HttpEntity entity;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Creates a new request with this specified method and URL.
@@ -112,6 +114,8 @@ public class HTTPRequest {
     /**
      * Add a JSON body to this request as an {@link org.codehaus.jackson.JsonNode}.
      * 
+     * Also sets the Content-Type header.
+     * 
      * Only one body can be added - if multiple are needed, see {@link #body(MultipartFormData)}.
      * 
      * @param node
@@ -120,11 +124,14 @@ public class HTTPRequest {
      * @throws HTTPRequestException If there's a general IOException in serialization.
      */
     public HTTPRequest body(JsonNode node) throws HTTPRequestException, JsonProcessingException {
+        header("Content-Type", "application/json");
         try {
             StringWriter writer = new StringWriter();
-            JsonGenerator generator = new JsonFactory().createJsonGenerator(writer);
-            generator.writeTree(node);
-            return body(writer.getBuffer().toString());
+            mapper.getJsonFactory()
+                    .createJsonGenerator(writer)
+                    .writeTree(node);
+            entity = new StringEntity(writer.getBuffer().toString(), ContentType.APPLICATION_JSON);
+            return this;
         } catch (IOException e) {
             throw new HTTPRequestException(e);
         }

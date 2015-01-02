@@ -102,7 +102,8 @@ public class HTTPResponse {
         try {
             InputStream stream = response.getEntity().getContent();
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(stream);
+            return mapper.readTree(mapper.getJsonFactory()
+                    .createJsonParser(stream));
         } catch (IOException e) {
             throw new HTTPResponseException(e);
         }

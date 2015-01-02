@@ -28,11 +28,14 @@ public class HTTPRequestFactoryTest {
     
     @Test
     public void testDefaultHeaders() throws HTTPException {
-        JsonNode obj = new HTTPRequestFactory()
+        JsonNode headers = new HTTPRequestFactory()
                 .addDefaultHeader("X-Test", "test")
                 .get("http://httpbin.org/headers")
+                .header("X-Test-Again", "still")
                 .sendAndVerify()
-                .getJSON();
-        assertEquals("test", obj.get("headers").get("X-Test").asText());
+                .getJSON()
+                .get("headers");
+        assertEquals("test", headers.get("X-Test").asText());
+        assertEquals("still", headers.get("X-Test-Again").asText());
     }
 }
