@@ -3,8 +3,13 @@ package com.forana.http;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.JsonNodeFactory;
@@ -13,8 +18,20 @@ import org.junit.Test;
 
 import com.forana.http.exceptions.HTTPException;
 import com.forana.http.exceptions.HTTPRequestException;
+import com.forana.http.exceptions.HTTPResponseException;
 
 public class HTTPRequestTest {
+    @Test
+    public void testSendAndVerify() throws HTTPException {
+        HTTPls.get("https://httpbin.org/status/200").sendAndVerify();
+
+        try {
+            HTTPls.get("https://httpbin.org/status/369").sendAndVerify();
+            fail("Expected an exception");
+        } catch (HTTPResponseException e) {
+        }
+    }
+
     @Test
     public void testCertificateVerification() throws HTTPException {
         // this should throw an exception
@@ -101,4 +118,57 @@ public class HTTPRequestTest {
 
         assertEquals(sentBody.get("6x9").asText(), receivedBody.get("6x9").asText());
     }
+
+    @Test
+    public void testStringBody() throws HTTPException {
+        String sentBody = "foxtrot uniform";
+        String receivedBody = HTTPls.post("http://httpbin.org/post")
+                .body(sentBody)
+                .sendAndVerify()
+                .getJSON()
+                .get("data")
+                .asText();
+
+        assertEquals(sentBody, receivedBody);
+    }
+    
+    @Test
+    public void testMultipart() throws HTTPException, IOException {
+        // use a temp file
+        File tempFile = File.createTempFile("test", "txt");
+        String fileContents = "There and Back Again";
+        FileWriter writer = new FileWriter(tempFile);
+        writer.append(fileContents);
+        writer.close();
+
+        // byte[]
+        String byteData = "The Talos Mistake";
+
+        // stream tests commented out due to https://github.com/Runscope/httpbin/issues/102
+        // the requests _look_ solid, but I have no way to test this at the moment
+        /*
+         * String streamText = "Nerevar, Moon and Star";
+         * InputStream stream = new ByteArrayInputStream(streamText.getBytes());
+         */
+
+        JsonNode body = HTTPls.post("http://httpbin.org/post")
+                .body(new MultipartFormData()
+                        .data("file", tempFile)
+                        .data("bytes", byteData.getBytes())
+                        // .data("stream", stream)
+                        .field("x", "y")
+                        .field("m1a", 1))
+                .sendAndVerify()
+                .getJSON();
+
+        JsonNode form = body.get("form");
+        JsonNode files = body.get("files");
+
+        assertEquals(fileContents, files.get("file").asText());
+        assertEquals(byteData, files.get("bytes").asText());
+        // assertEquals(streamText, files.get("stream").asText());
+        assertEquals("y", form.get("x").asText());
+        assertEquals(1, form.get("m1a").asInt());
+    }
+
 }

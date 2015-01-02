@@ -31,13 +31,15 @@ public class MultipartFormData {
     /**
      * Adds a data section under a specified name.
      * 
+     * Sets the content-type to <code>application/octet-stream</code> and the filename to the same
+     * name as the form field.
+     * 
      * @see org.apache.http.entity.mime.MultipartEntityBuilder#addBinaryBody(String, byte[])
      * 
      * @return this
      */
     public MultipartFormData data(String name, byte[] bytes) {
-        builder.addBinaryBody(name, bytes);
-        return this;
+        return data(name, bytes, ContentType.APPLICATION_OCTET_STREAM, name);
     }
 
     /**
@@ -81,13 +83,15 @@ public class MultipartFormData {
     /**
      * Adds a data section under a specified name.
      * 
+     * Sets the content-type to <code>application/octet-stream</code> and the filename to the same
+     * name as the form field.
+     * 
      * @see org.apache.http.entity.mime.MultipartEntityBuilder#addBinaryBody(String, InputStream)
      * 
      * @return this
      */
     public MultipartFormData data(String name, InputStream stream) {
-        builder.addBinaryBody(name, stream);
-        return this;
+        return data(name, stream, ContentType.APPLICATION_OCTET_STREAM, name);
     }
 
     /**
