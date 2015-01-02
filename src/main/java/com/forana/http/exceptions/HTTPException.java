@@ -8,7 +8,11 @@ package com.forana.http.exceptions;
 public abstract class HTTPException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public HTTPException(Throwable cause) {
+    protected HTTPException(String message) {
+        super(message);
+    }
+
+    protected HTTPException(Throwable cause) {
         super(cause);
     }
 }

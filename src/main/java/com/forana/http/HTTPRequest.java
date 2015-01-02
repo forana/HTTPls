@@ -193,7 +193,7 @@ public class HTTPRequest {
     public HTTPResponse send() throws HTTPRequestException {
         CloseableHttpClient client = null;
         try {
-            client = HttpClients.createDefault();
+            client = createClient();
             URI uri = buildURI();
             HttpUriRequest request = buildRequest(uri);
 
@@ -240,7 +240,8 @@ public class HTTPRequest {
     protected URI buildURI() throws HTTPRequestException {
         try {
             URI baseURI = new URI(url);
-            List<NameValuePair> mergedParams = URLEncodedUtils.parse(baseURI, encoding);
+            List<NameValuePair> mergedParams = new LinkedList<>();
+            mergedParams.addAll(URLEncodedUtils.parse(baseURI, encoding));
             mergedParams.addAll(parameters);
 
             URI newURI = new URI(baseURI.getScheme(),
