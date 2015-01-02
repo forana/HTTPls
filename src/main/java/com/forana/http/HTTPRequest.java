@@ -26,6 +26,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
 import com.forana.http.exceptions.HTTPRequestException;
+import com.forana.http.exceptions.HTTPResponseException;
 import com.forana.http.util.ArbitraryMethodRequest;
 import com.forana.http.util.ArbitraryMethodRequestWithBody;
 import com.forana.http.util.NonValidatingClient;
@@ -215,6 +216,25 @@ public class HTTPRequest {
                 }
             }
         }
+    }
+
+    /**
+     * Send the request and throw {@link com.forana.http.exceptions.HTTPResponseException} if
+     * response.isOk() evaluates to <code>false</code>.
+     * 
+     * @return An {@link com.forana.http.HTTPResponse} object.
+     * @throws HTTPRequestException If any IO-related exceptions occur while making this request.
+     *             The thrown exception will wrap that exception.
+     * @throws HTTPResponseException If the response status is not 20X.
+     */
+    public HTTPResponse sendAndVerify() throws HTTPRequestException, HTTPResponseException {
+        HTTPResponse response = send();
+        if (!response.isOk()) {
+            throw new HTTPResponseException(String.format(
+                    "Received unexpected status '%d' (%s)",
+                    response.getStatus(), response.getStatusText()));
+        }
+        return response;
     }
 
     /**

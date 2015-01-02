@@ -58,6 +58,13 @@ public class HTTPResponse {
     }
 
     /**
+     * Convenience helper that checks if the response is within the 200 (acceptable) range.
+     */
+    public boolean isOk() {
+        return getStatus() >= 200 && getStatus() <= 200;
+    }
+
+    /**
      * Retrieves the content-type of the response body (mime), or null if that header isn't set.
      */
     public String getContentType() {
@@ -120,28 +127,5 @@ public class HTTPResponse {
             headers.add(header);
         }
         return headers;
-    }
-
-    /**
-     * Convenience helper that checks if the response is within the 200 (acceptable) range.
-     */
-    public boolean isOk() {
-        return getStatus() >= 200 && getStatus() <= 200;
-    }
-
-    /**
-     * Chainable method that throws {@link com.forana.http.exceptions.HTTPResponseException} if
-     * isOk() evaluates to <code>false</code>.
-     * 
-     * @return this
-     * @throws HTTPResponseException
-     */
-    public HTTPResponse verifyOk() throws HTTPResponseException {
-        if (!isOk()) {
-            throw new HTTPResponseException(String.format(
-                    "Received unexpected status '%d' (%s)",
-                    getStatus(), getStatusText()));
-        }
-        return this;
     }
 }

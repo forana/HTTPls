@@ -30,8 +30,7 @@ public class HTTPRequestTest {
         JsonNode args = HTTPls.get("http://httpbin.org/get")
                 .parameter("hey", "listen")
                 .parameter("pi", 3)
-                .send()
-                .verifyOk()
+                .sendAndVerify()
                 .getJSON()
                 .get("args");
         
@@ -42,8 +41,7 @@ public class HTTPRequestTest {
     @Test
     public void testParametersFromStringOnly() throws HTTPException {
         JsonNode args = HTTPls.get("http://httpbin.org/get?a=b&c=d")
-                .send()
-                .verifyOk()
+                .sendAndVerify()
                 .getJSON()
                 .get("args");
 
@@ -55,8 +53,7 @@ public class HTTPRequestTest {
     public void testParametersMixed() throws HTTPException {
         JsonNode args = HTTPls.get("http://httpbin.org/get?a=b")
                 .parameter("c", "d")
-                .send()
-                .verifyOk()
+                .sendAndVerify()
                 .getJSON()
                 .get("args");
 
@@ -69,7 +66,6 @@ public class HTTPRequestTest {
         // TODO make this test meaningful
         HTTPls.get("http://httpbin.org/get?a=4&42=")
                 .setEncoding("ASCII")
-                .send()
-                .verifyOk();
+                .sendAndVerify();
     }
 }
