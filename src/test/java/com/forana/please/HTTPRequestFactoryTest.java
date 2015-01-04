@@ -1,15 +1,11 @@
 package com.forana.please;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
 
-import com.forana.please.HTTPRequestFactory;
-import com.forana.please.HTTPResponse;
 import com.forana.please.exceptions.HTTPException;
-import com.forana.please.exceptions.HTTPRequestException;
 
 public class HTTPRequestFactoryTest {
     @Test
@@ -20,12 +16,10 @@ public class HTTPRequestFactoryTest {
     }
 
     @Test
-    public void testBaseURL() throws HTTPRequestException {
-        HTTPResponse response = new HTTPRequestFactory("http://httpbin.org")
-                .get("/status/418")
-                .send();
-        assertEquals(response.getStatus(), 418);
-        assertTrue(response.getStatusText().contains("TEAPOT"));
+    public void testBaseURL() throws HTTPException {
+        new HTTPRequestFactory("http://httpbin.org")
+                .get("/get")
+                .sendAndVerify();
     }
     
     @Test

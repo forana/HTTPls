@@ -2,9 +2,12 @@ package com.forana.please;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -41,6 +44,15 @@ public class HTTPResponse {
     public void close() throws IOException {
         response.close();
         client.close();
+    }
+
+    @Override
+    protected final void finalize() throws Throwable {
+        try {
+            close();
+        } finally {
+            super.finalize();
+        }
     }
 
     /**
@@ -83,11 +95,48 @@ public class HTTPResponse {
      * Retrieve the body as an @{link java.io.InputStream}. The user is then responsible for closing
      * the stream when finished.
      * 
-     * @throws HTTPResponseException
+     * @throws HTTPResponseException If there's a general I/O error.
      */
     public InputStream getBody() throws HTTPResponseException {
         try {
             return response.getEntity().getContent();
+        } catch (IOException e) {
+            throw new HTTPResponseException(e);
+        }
+    }
+
+    /**
+     * Retrieve the body as an <code>byte[]</code>. The stream will be closed automatically.
+     * 
+     * This method will not be spectacularly performant - if you're willing to add a third-party
+     * dependency, look at commons-io's <code>IOUtils.toByteArray(InputStream)</code>.
+     * 
+     * @throws HTTPResponseException If there's a general I/O error.
+     */
+    public byte[] getBytes() throws HTTPResponseException {
+        try {
+            InputStream stream = getBody();
+            List<byte[]> byteArrays = new LinkedList<>();
+            final int CHUNK_SIZE = 1024;
+            int lastRead = -1;
+            int totalSize = 0;
+            do {
+                byte[] buffer = new byte[CHUNK_SIZE];
+                lastRead = stream.read(buffer);
+                if (lastRead != -1) {
+                    totalSize += lastRead;
+                    byteArrays.add(Arrays.copyOf(buffer, lastRead));
+                }
+            } while (lastRead > 0);
+            stream.close();
+
+            byte[] result = new byte[totalSize];
+            int i = 0;
+            for (byte[] array : byteArrays) {
+                result[i] = array[i % CHUNK_SIZE];
+                i++;
+            }
+            return result;
         } catch (IOException e) {
             throw new HTTPResponseException(e);
         }
@@ -100,7 +149,7 @@ public class HTTPResponse {
      */
     public JsonNode getJSON() throws HTTPResponseException {
         try {
-            InputStream stream = response.getEntity().getContent();
+            InputStream stream = getBody();
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readTree(mapper.getJsonFactory()
                     .createJsonParser(stream));
@@ -122,11 +171,33 @@ public class HTTPResponse {
     /**
      * Retrieve all headers in the response.
      */
-    public Collection<Header> getHeaders() {
-        List<Header> headers = new LinkedList<>();
+    public Map<String, String> getHeaders() {
+        Map<String, String> headers = new TreeMap<>(); // so that entrySet() is ordered
         for (Header header : response.getAllHeaders()) {
-            headers.add(header);
+            headers.put(header.getName(), header.getValue());
         }
         return headers;
+    }
+    
+    /**
+     * Print the status, reason, and headers to System.out. Useful for debugging.
+     * 
+     * @return this
+     */
+    public HTTPResponse dump() {
+        return dump(System.out);
+    }
+
+    /**
+     * Print the status, reason, and headers. Useful for debugging.
+     * 
+     * @return this
+     */
+    public HTTPResponse dump(PrintStream out) {
+        out.println(String.format("HTTP %d: %s", getStatus(), getStatusText()));
+        for (Map.Entry<String, String> entry : getHeaders().entrySet()) {
+            out.println(String.format("%s: %s", entry.getKey(), entry.getValue()));
+        }
+        return this;
     }
 }
