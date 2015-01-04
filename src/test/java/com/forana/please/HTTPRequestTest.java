@@ -1,11 +1,15 @@
 package com.forana.please;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -44,6 +48,16 @@ public class HTTPRequestTest {
                 .send();
     }
     
+    @Test
+    public void testURISyntaxCatch() throws HTTPException {
+        try {
+            Please.get("hey hello").send();
+            fail("Expected a syntax exception");
+        } catch (HTTPRequestException e) {
+            assertTrue(e.getCause() instanceof URISyntaxException);
+        }
+    }
+
     @Test
     public void testParametersFromBuilderOnly() throws HTTPException {
         JsonNode args = Please.get("http://httpbin.org/get")
@@ -129,6 +143,28 @@ public class HTTPRequestTest {
         assertEquals(sentBody, receivedBody);
     }
     
+    @Test
+    public void testFormBody() throws HTTPException {
+        JsonNode form = Please.post("http://httpbin.org/post")
+                .body(new Form()
+                        .addAll(new HashMap<String, String>() {
+                            private static final long serialVersionUID = 1L;
+                            {
+                                put("time", "money");
+                                put("daylight", "burning");
+                        }})
+                        .addAll("k", Arrays.asList("a", "b", "c"))
+                        .add("6x9base7", 42))
+                .sendAndVerify()
+                .getJSON()
+                .get("form");
+
+        assertEquals("money", form.get("time").asText());
+        assertEquals("burning", form.get("daylight").asText());
+        assertEquals(42, form.get("6x9base7").asInt());
+        assertEquals(3, form.get("k").size());
+    }
+
     @Test
     public void testMultipart() throws HTTPException, IOException {
         // use a temp file

@@ -138,18 +138,15 @@ public class HTTPRequest {
     }
 
     /**
-     * Add an object as a body to this request.
+     * Add a application/x-www-form-urlencoded body to this request.
      * 
-     * {@link java.lang.Object#toString()} will be called on the object, and the resulting String
-     * sent over with the configured encoding.
+     * Only one body can be added - set multiple bodies inside of <code>formData</code>.
      * 
-     * Only one body can be added - if multiple are needed, see {@link #body(MultipartFormData)}.
-     * 
-     * @param obj
+     * @param form
      * @return this
      */
-    public HTTPRequest body(Object obj) {
-        entity = new StringEntity(obj.toString(), encoding);
+    public HTTPRequest body(Form form) {
+        entity = form.getEntity(encoding);
         return this;
     }
 
@@ -163,6 +160,22 @@ public class HTTPRequest {
      */
     public HTTPRequest body(MultipartFormData formData) {
         entity = formData.getEntity();
+        return this;
+    }
+
+    /**
+     * Add an object as a body to this request.
+     * 
+     * {@link java.lang.Object#toString()} will be called on the object, and the resulting String
+     * sent over with the configured encoding.
+     * 
+     * Only one body can be added - if multiple are needed, see {@link #body(MultipartFormData)}.
+     * 
+     * @param obj
+     * @return this
+     */
+    public HTTPRequest body(Object obj) {
+        entity = new StringEntity(obj.toString(), encoding);
         return this;
     }
 
