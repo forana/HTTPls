@@ -133,13 +133,26 @@ public class HTTPResponse {
             byte[] result = new byte[totalSize];
             int i = 0;
             for (byte[] array : byteArrays) {
-                result[i] = array[i % CHUNK_SIZE];
-                i++;
+                for (byte b : array) {
+                    result[i] = b;
+                    i++;
+                }
             }
             return result;
         } catch (IOException e) {
             throw new HTTPResponseException(e);
         }
+    }
+
+    /**
+     * Convenience method to return the body as a string.
+     * 
+     * @return
+     * @throws HTTPResponseException
+     */
+    public String getBodyText() throws HTTPResponseException {
+        byte[] bytes = getBytes();
+        return new String(bytes);
     }
 
     /**
