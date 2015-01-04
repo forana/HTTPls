@@ -3,21 +3,16 @@ package com.forana.please;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 
-import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
 
-import com.forana.please.MultipartFormData;
-import com.forana.please.Please;
 import com.forana.please.exceptions.HTTPException;
 import com.forana.please.exceptions.HTTPRequestException;
 import com.forana.please.exceptions.HTTPResponseException;
