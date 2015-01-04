@@ -57,7 +57,7 @@ public class HTTPRequest {
      * Creates a new request with this specified method and URL.
      * 
      * This should not be called directly from client code - instances of this class should be
-     * accessed from {@link com.forana.http.HTTPls} or {@link com.forana.http.HTTPRequestFactory}.
+     * accessed from {@link com.forana.http.Please} or {@link com.forana.http.HTTPRequestFactory}.
      */
     protected HTTPRequest(String method, String url) {
         this.method = method;

@@ -1,5 +1,5 @@
 /**
- * Utility classes used by HTTPls. Clients shouldn't need any of these.
+ * Utility classes used by Please. Clients shouldn't need any of these.
  * 
  * @author forana
  */

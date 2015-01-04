@@ -1,7 +1,7 @@
 package com.forana.http.exceptions;
 
 /**
- * Base exception for all of HTTPls.
+ * Base exception for all of Please.
  * 
  * @author forana
  */

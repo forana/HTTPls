@@ -1,7 +1,7 @@
 package com.forana.http.exceptions;
 
 /**
- * Exception that wraps exceptions occurring in the HTTPls request flow.
+ * Exception that wraps exceptions occurring in the HTTP request flow.
  * 
  * @author forana
  */

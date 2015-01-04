@@ -7,10 +7,10 @@ package com.forana.http;
  * 
  * @author forana
  */
-public class HTTPls {
+public class Please {
     private static final HTTPRequestFactory factory = new HTTPRequestFactory();
 
-    private HTTPls() {
+    private Please() {
     }
 
     /**

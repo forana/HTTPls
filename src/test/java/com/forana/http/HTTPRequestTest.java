@@ -23,10 +23,10 @@ import com.forana.http.exceptions.HTTPResponseException;
 public class HTTPRequestTest {
     @Test
     public void testSendAndVerify() throws HTTPException {
-        HTTPls.get("https://httpbin.org/status/200").sendAndVerify();
+        Please.get("https://httpbin.org/status/200").sendAndVerify();
 
         try {
-            HTTPls.get("https://httpbin.org/status/369").sendAndVerify();
+            Please.get("https://httpbin.org/status/369").sendAndVerify();
             fail("Expected an exception");
         } catch (HTTPResponseException e) {
         }
@@ -36,20 +36,20 @@ public class HTTPRequestTest {
     public void testCertificateVerification() throws HTTPException {
         // this should throw an exception
         try {
-            HTTPls.get("https://httpbin.herokuapp.com").send();
+            Please.get("https://httpbin.herokuapp.com").send();
             fail("Expected a certificate failure");
         } catch (HTTPRequestException e) {
         }
 
         // this shouldn't throw an exception
-        HTTPls.get("https://httpbin.herokuapp.com")
+        Please.get("https://httpbin.herokuapp.com")
                 .setVerifyCertificates(false)
                 .send();
     }
     
     @Test
     public void testParametersFromBuilderOnly() throws HTTPException {
-        JsonNode args = HTTPls.get("http://httpbin.org/get")
+        JsonNode args = Please.get("http://httpbin.org/get")
                 .parameter("hey", "listen")
                 .parameter("pi", 3)
                 .sendAndVerify()
@@ -62,7 +62,7 @@ public class HTTPRequestTest {
 
     @Test
     public void testParametersFromStringOnly() throws HTTPException {
-        JsonNode args = HTTPls.get("http://httpbin.org/get?a=b&c=d")
+        JsonNode args = Please.get("http://httpbin.org/get?a=b&c=d")
                 .sendAndVerify()
                 .getJSON()
                 .get("args");
@@ -73,7 +73,7 @@ public class HTTPRequestTest {
 
     @Test
     public void testParametersMixed() throws HTTPException {
-        JsonNode args = HTTPls.get("http://httpbin.org/get?a=b")
+        JsonNode args = Please.get("http://httpbin.org/get?a=b")
                 .parameter("c", "d")
                 .sendAndVerify()
                 .getJSON()
@@ -86,14 +86,14 @@ public class HTTPRequestTest {
     @Test
     public void testSetEncoding() throws HTTPException {
         // TODO make this test meaningful
-        HTTPls.get("http://httpbin.org/get?a=4&42=")
+        Please.get("http://httpbin.org/get?a=4&42=")
                 .setEncoding("ASCII")
                 .sendAndVerify();
     }
 
     @Test
     public void testHeader() throws HTTPException {
-        JsonNode headers = HTTPls.get("http://httpbin.org/headers")
+        JsonNode headers = Please.get("http://httpbin.org/headers")
                 .header("X-Thing", "thing")
                 .sendAndVerify()
                 .getJSON()
@@ -105,7 +105,7 @@ public class HTTPRequestTest {
     public void testJSONBody() throws HTTPException, IOException {
         ObjectNode sentBody = new ObjectNode(JsonNodeFactory.instance);
         sentBody.put("6x9", "42");
-        String receivedBodyText = HTTPls.post("http://httpbin.org/post")
+        String receivedBodyText = Please.post("http://httpbin.org/post")
                 .header("Accept", "application/json")
                 .body(sentBody)
                 .sendAndVerify()
@@ -122,7 +122,7 @@ public class HTTPRequestTest {
     @Test
     public void testStringBody() throws HTTPException {
         String sentBody = "foxtrot uniform";
-        String receivedBody = HTTPls.post("http://httpbin.org/post")
+        String receivedBody = Please.post("http://httpbin.org/post")
                 .body(sentBody)
                 .sendAndVerify()
                 .getJSON()
@@ -151,7 +151,7 @@ public class HTTPRequestTest {
          * InputStream stream = new ByteArrayInputStream(streamText.getBytes());
          */
 
-        JsonNode body = HTTPls.post("http://httpbin.org/post")
+        JsonNode body = Please.post("http://httpbin.org/post")
                 .body(new MultipartFormData()
                         .data("file", tempFile)
                         .data("bytes", byteData.getBytes())
