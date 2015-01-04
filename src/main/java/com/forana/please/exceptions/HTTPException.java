@@ -1,4 +1,4 @@
-package com.forana.http.exceptions;
+package com.forana.please.exceptions;
 
 /**
  * Base exception for all of Please.

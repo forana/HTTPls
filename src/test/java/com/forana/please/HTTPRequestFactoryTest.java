@@ -1,4 +1,4 @@
-package com.forana.http;
+package com.forana.please;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -6,8 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
 
-import com.forana.http.exceptions.HTTPException;
-import com.forana.http.exceptions.HTTPRequestException;
+import com.forana.please.HTTPRequestFactory;
+import com.forana.please.HTTPResponse;
+import com.forana.please.exceptions.HTTPException;
+import com.forana.please.exceptions.HTTPRequestException;
 
 public class HTTPRequestFactoryTest {
     @Test

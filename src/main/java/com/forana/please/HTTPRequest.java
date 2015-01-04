@@ -1,4 +1,4 @@
-package com.forana.http;
+package com.forana.please;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +25,11 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.forana.http.exceptions.HTTPRequestException;
-import com.forana.http.exceptions.HTTPResponseException;
-import com.forana.http.util.ArbitraryMethodRequest;
-import com.forana.http.util.ArbitraryMethodRequestWithBody;
-import com.forana.http.util.NonValidatingClient;
+import com.forana.please.exceptions.HTTPRequestException;
+import com.forana.please.exceptions.HTTPResponseException;
+import com.forana.please.util.ArbitraryMethodRequest;
+import com.forana.please.util.ArbitraryMethodRequestWithBody;
+import com.forana.please.util.NonValidatingClient;
 
 /**
  * Object symbolizing an HTTP request. Supports builder-style population and chaining.
@@ -57,7 +57,7 @@ public class HTTPRequest {
      * Creates a new request with this specified method and URL.
      * 
      * This should not be called directly from client code - instances of this class should be
-     * accessed from {@link com.forana.http.Please} or {@link com.forana.http.HTTPRequestFactory}.
+     * accessed from {@link com.forana.please.Please} or {@link com.forana.please.HTTPRequestFactory}.
      */
     protected HTTPRequest(String method, String url) {
         this.method = method;
@@ -194,7 +194,7 @@ public class HTTPRequest {
     /**
      * Send the request and retrieve a response.
      * 
-     * @return An {@link com.forana.http.HTTPResponse} object.
+     * @return An {@link com.forana.please.HTTPResponse} object.
      * @throws HTTPRequestException If any IO-related exceptions occur while making this request.
      *             The thrown exception will wrap that exception.
      */
@@ -226,10 +226,10 @@ public class HTTPRequest {
     }
 
     /**
-     * Send the request and throw {@link com.forana.http.exceptions.HTTPResponseException} if
+     * Send the request and throw {@link com.forana.please.exceptions.HTTPResponseException} if
      * response.isOk() evaluates to <code>false</code>.
      * 
-     * @return An {@link com.forana.http.HTTPResponse} object.
+     * @return An {@link com.forana.please.HTTPResponse} object.
      * @throws HTTPRequestException If any IO-related exceptions occur while making this request.
      *             The thrown exception will wrap that exception.
      * @throws HTTPResponseException If the response status is not 20X.

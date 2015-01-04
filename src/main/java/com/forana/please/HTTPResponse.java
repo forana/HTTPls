@@ -1,4 +1,4 @@
-package com.forana.http;
+package com.forana.please;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.forana.http.exceptions.HTTPResponseException;
+import com.forana.please.exceptions.HTTPResponseException;
 
 /**
  * Object symbolizing an HTTP response.

@@ -1,4 +1,4 @@
-package com.forana.http;
+package com.forana.please;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -16,9 +16,11 @@ import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
 
-import com.forana.http.exceptions.HTTPException;
-import com.forana.http.exceptions.HTTPRequestException;
-import com.forana.http.exceptions.HTTPResponseException;
+import com.forana.please.MultipartFormData;
+import com.forana.please.Please;
+import com.forana.please.exceptions.HTTPException;
+import com.forana.please.exceptions.HTTPRequestException;
+import com.forana.please.exceptions.HTTPResponseException;
 
 public class HTTPRequestTest {
     @Test

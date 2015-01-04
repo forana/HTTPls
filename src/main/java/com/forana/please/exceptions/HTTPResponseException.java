@@ -1,4 +1,4 @@
-package com.forana.http.exceptions;
+package com.forana.please.exceptions;
 
 /**
  * Exception that wraps exceptions occurring in the HTTP response flow.
