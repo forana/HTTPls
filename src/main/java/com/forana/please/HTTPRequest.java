@@ -21,10 +21,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forana.please.exceptions.HTTPRequestException;
 import com.forana.please.exceptions.HTTPResponseException;
 import com.forana.please.util.ArbitraryMethodRequest;
@@ -127,8 +127,8 @@ public class HTTPRequest {
         header("Content-Type", "application/json");
         try {
             StringWriter writer = new StringWriter();
-            mapper.getJsonFactory()
-                    .createJsonGenerator(writer)
+            mapper.getFactory()
+                    .createGenerator(writer)
                     .writeTree(node);
             entity = new StringEntity(writer.getBuffer().toString(), ContentType.APPLICATION_JSON);
             return this;

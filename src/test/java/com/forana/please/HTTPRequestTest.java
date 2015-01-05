@@ -11,12 +11,12 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.JsonNodeFactory;
-import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.forana.please.exceptions.HTTPException;
 import com.forana.please.exceptions.HTTPRequestException;
 import com.forana.please.exceptions.HTTPResponseException;

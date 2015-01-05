@@ -12,9 +12,9 @@ import java.util.TreeMap;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forana.please.exceptions.HTTPResponseException;
 
 /**
@@ -163,8 +163,8 @@ public class HTTPResponse {
         try {
             InputStream stream = getBody();
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(mapper.getJsonFactory()
-                    .createJsonParser(stream));
+            return mapper.readTree(mapper.getFactory()
+                    .createParser(stream));
         } catch (IOException e) {
             throw new HTTPResponseException(e);
         }

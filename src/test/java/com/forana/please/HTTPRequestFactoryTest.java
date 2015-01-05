@@ -2,9 +2,9 @@ package com.forana.please;
 
 import static org.junit.Assert.assertEquals;
 
-import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.forana.please.exceptions.HTTPException;
 
 public class HTTPRequestFactoryTest {
