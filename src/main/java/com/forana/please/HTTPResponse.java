@@ -147,7 +147,6 @@ public class HTTPResponse {
     /**
      * Convenience method to return the body as a string.
      * 
-     * @return
      * @throws HTTPResponseException
      */
     public String getBodyText() throws HTTPResponseException {
