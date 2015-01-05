@@ -22,7 +22,7 @@ Without `Please`, [it gets a lot nastier](https://github.com/forana/Please/blob/
 
 ### Maven/Gradle
 
-TODO (issue #5)
+Project creation pending. Until then, [use git dependencies](https://github.com/bat-cha/gradle-plugin-git-dependencies).
 
 ### Jar
 
