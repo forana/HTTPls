@@ -12,7 +12,7 @@ System.out.println(response.getContentType()); // "text/plain"
 System.out.println(response.getBodyText()); // "hello world\n"
 ```
 
-Without `Please`, [it gets a lot nastier](https://github.com/forana/Please/blob/master/src/test/java/com/forana/please/ExampleTest.java).
+Without `Please`, [it gets a lot nastier](https://github.com/forana/Please/blob/master/src/test/java/com/forana/please/ExampleTest.java). Please wraps Apache's HttpClient (the same library as that example), simplifying it and optimizing for common use cases.
 
 (note: there's a similar project, [Unirest](https://github.com/Mashape/unirest-java/), that's focused on REST support - that might be more useful for your use case than this. Check out both!)
 

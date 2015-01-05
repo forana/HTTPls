@@ -1,12 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'fatjar'
+
+group = 'com.forana.please'
+version = '0.1.0'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-
-group = 'com.forana'
-version = '0.1.0-alpha'
 
 repositories {
     mavenCentral()
@@ -16,6 +17,10 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
+    dependencies {
+        classpath "eu.appsatori:gradle-fatjar-plugin:0.2"
+    }
 }
 
 dependencies {
@@ -24,4 +29,7 @@ dependencies {
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 
     testCompile 'junit:junit:4.11'
+}
+
+fatJar {
 }
