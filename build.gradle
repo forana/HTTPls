@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'fatjar'
 
-group = 'com.forana.please'
+group = 'com.forana'
 version = '0.1.0'
 
 sourceCompatibility = 1.7
