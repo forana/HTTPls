@@ -1,4 +1,4 @@
-package com.forana.please.exceptions;
+package com.alexforan.please.exceptions;
 
 /**
  * Base exception for all of Please.

@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import java.io.File;
 import java.io.InputStream;

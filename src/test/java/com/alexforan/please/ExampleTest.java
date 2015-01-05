@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
 
-import com.forana.please.exceptions.HTTPException;
+import com.alexforan.please.Please;
+import com.alexforan.please.exceptions.HTTPException;
 
 public class ExampleTest {
     private static final String EXAMPLE_URL = "http://alexforan.com/hello.txt";

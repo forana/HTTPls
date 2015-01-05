@@ -1,9 +1,9 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import org.junit.Test;
 
-import com.forana.please.Please;
-import com.forana.please.exceptions.HTTPException;
+import com.alexforan.please.Please;
+import com.alexforan.please.exceptions.HTTPException;
 
 public class PleaseTest {
     @Test

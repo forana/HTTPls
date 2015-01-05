@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,13 +13,16 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.alexforan.please.Form;
+import com.alexforan.please.MultipartFormData;
+import com.alexforan.please.Please;
+import com.alexforan.please.exceptions.HTTPException;
+import com.alexforan.please.exceptions.HTTPRequestException;
+import com.alexforan.please.exceptions.HTTPResponseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.forana.please.exceptions.HTTPException;
-import com.forana.please.exceptions.HTTPRequestException;
-import com.forana.please.exceptions.HTTPResponseException;
 
 public class HTTPRequestTest {
     @Test

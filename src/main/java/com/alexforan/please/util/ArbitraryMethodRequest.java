@@ -1,4 +1,4 @@
-package com.forana.please.util;
+package com.alexforan.please.util;
 
 import org.apache.http.client.methods.HttpRequestBase;
 

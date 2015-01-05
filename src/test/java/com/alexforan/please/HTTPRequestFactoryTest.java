@@ -1,11 +1,12 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.alexforan.please.HTTPRequestFactory;
+import com.alexforan.please.exceptions.HTTPException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.forana.please.exceptions.HTTPException;
 
 public class HTTPRequestFactoryTest {
     @Test

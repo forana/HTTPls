@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,7 +9,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.forana.please.exceptions.HTTPException;
+import com.alexforan.please.HTTPResponse;
+import com.alexforan.please.Please;
+import com.alexforan.please.exceptions.HTTPException;
 
 public class HTTPResponseTest {
     @Test

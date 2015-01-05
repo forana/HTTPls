@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'fatjar'
 
-group = 'com.forana'
+group = 'com.alexforan'
 version = '0.1.0'
 
 sourceCompatibility = 1.7
@@ -29,10 +29,6 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
 
     testCompile 'junit:junit:4.11'
-}
-
-jar {
-    from sourceSets.main.allSource
 }
 
 fatJar {

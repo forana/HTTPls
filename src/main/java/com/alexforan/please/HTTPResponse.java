@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,9 +13,9 @@ import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import com.alexforan.please.exceptions.HTTPResponseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forana.please.exceptions.HTTPResponseException;
 
 /**
  * Object symbolizing an HTTP response.

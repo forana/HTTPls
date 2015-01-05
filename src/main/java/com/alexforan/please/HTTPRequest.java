@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,14 +22,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.alexforan.please.exceptions.HTTPRequestException;
+import com.alexforan.please.exceptions.HTTPResponseException;
+import com.alexforan.please.util.ArbitraryMethodRequest;
+import com.alexforan.please.util.ArbitraryMethodRequestWithBody;
+import com.alexforan.please.util.NonValidatingClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forana.please.exceptions.HTTPRequestException;
-import com.forana.please.exceptions.HTTPResponseException;
-import com.forana.please.util.ArbitraryMethodRequest;
-import com.forana.please.util.ArbitraryMethodRequestWithBody;
-import com.forana.please.util.NonValidatingClient;
 
 /**
  * Object symbolizing an HTTP request. Supports builder-style population and chaining.
@@ -57,7 +57,7 @@ public class HTTPRequest {
      * Creates a new request with this specified method and URL.
      * 
      * This should not be called directly from client code - instances of this class should be
-     * accessed from {@link com.forana.please.Please} or {@link com.forana.please.HTTPRequestFactory}.
+     * accessed from {@link com.alexforan.please.Please} or {@link com.alexforan.please.HTTPRequestFactory}.
      */
     protected HTTPRequest(String method, String url) {
         this.method = method;
@@ -112,7 +112,7 @@ public class HTTPRequest {
     }
 
     /**
-     * Add a JSON body to this request as an {@link org.codehaus.jackson.JsonNode}.
+     * Add a JSON body to this request as an {@link com.fasterxml.jackson.databind.JsonNode}.
      * 
      * Also sets the Content-Type header.
      * 
@@ -207,7 +207,7 @@ public class HTTPRequest {
     /**
      * Send the request and retrieve a response.
      * 
-     * @return An {@link com.forana.please.HTTPResponse} object.
+     * @return An {@link com.alexforan.please.HTTPResponse} object.
      * @throws HTTPRequestException If any IO-related exceptions occur while making this request.
      *             The thrown exception will wrap that exception.
      */
@@ -239,10 +239,10 @@ public class HTTPRequest {
     }
 
     /**
-     * Send the request and throw {@link com.forana.please.exceptions.HTTPResponseException} if
+     * Send the request and throw {@link com.alexforan.please.exceptions.HTTPResponseException} if
      * response.isOk() evaluates to <code>false</code>.
      * 
-     * @return An {@link com.forana.please.HTTPResponse} object.
+     * @return An {@link com.alexforan.please.HTTPResponse} object.
      * @throws HTTPRequestException If any IO-related exceptions occur while making this request.
      *             The thrown exception will wrap that exception.
      * @throws HTTPResponseException If the response status is not 20X.

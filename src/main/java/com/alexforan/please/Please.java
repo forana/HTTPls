@@ -1,9 +1,9 @@
-package com.forana.please;
+package com.alexforan.please;
 
 /**
  * A simple facade for making requests without instantiating a factory.
  * 
- * @see com.forana.please.HTTPRequestFactory
+ * @see com.alexforan.please.HTTPRequestFactory
  * 
  * @author forana
  */

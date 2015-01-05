@@ -1,4 +1,4 @@
-package com.forana.please;
+package com.alexforan.please;
 
 import java.util.HashMap;
 import java.util.Map;
