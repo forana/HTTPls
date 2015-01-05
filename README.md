@@ -20,7 +20,13 @@ Without `Please`, [it gets a lot nastier](https://github.com/forana/Please/blob/
 
 ## Installing
 
-TODO
+### Maven/Gradle
+
+TODO (issue #5)
+
+### Jar
+
+[See Releases](https://github.com/forana/Please/releases)
 
 ## Example Usages
 
