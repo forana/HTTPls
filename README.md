@@ -22,7 +22,16 @@ Without `Please`, [it gets a lot nastier](https://github.com/forana/Please/blob/
 
 ### Maven/Gradle
 
-Project creation pending. Until then, [use git dependencies](https://github.com/bat-cha/gradle-plugin-git-dependencies).
+Artifact = `com.alexforan:please:0.1.0`
+
+Until it's in JCenter/Maven Central (waiting on a response), you'll have to add the repository `http://dl.bintray.com/forana/maven`. Gradle:
+
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'http://dl.bintray.com/forana/maven' }
+}
+```
 
 ### Jar
 
