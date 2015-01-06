@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'fatjar'
+apply plugin: 'maven'
 
 group = 'com.alexforan'
 version = '0.1.0'
@@ -32,4 +33,19 @@ dependencies {
 }
 
 fatJar {
+}
+
+task createPom << {
+    pom {
+        project {
+            artifactId = project.name
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
 }
