@@ -14,6 +14,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
@@ -280,19 +281,10 @@ public class HTTPRequest {
     protected URI buildURI() throws HTTPRequestException {
         try {
             URI baseURI = new URI(url);
-            List<NameValuePair> mergedParams = new LinkedList<>();
-            mergedParams.addAll(URLEncodedUtils.parse(baseURI, encoding));
-            mergedParams.addAll(parameters);
+            URIBuilder builder = new URIBuilder(baseURI);
+            builder.addParameters(parameters);
 
-            URI newURI = new URI(baseURI.getScheme(),
-                    baseURI.getUserInfo(),
-                    baseURI.getHost(),
-                    baseURI.getPort(),
-                    baseURI.getPath(),
-                    URLEncodedUtils.format(mergedParams, encoding),
-                    baseURI.getFragment());
-
-            return newURI;
+            return builder.build();
         } catch (URISyntaxException e) {
             throw new HTTPRequestException(e);
         }

@@ -88,13 +88,13 @@ public class HTTPRequestTest {
     @Test
     public void testParametersMixed() throws HTTPException {
         JsonNode args = Please.get("http://httpbin.org/get?a=b")
-                .parameter("c", "d")
+                .parameter("c", "d/h")
                 .sendAndVerify()
                 .getJSON()
                 .get("args");
 
         assertEquals("b", args.get("a").asText());
-        assertEquals("d", args.get("c").asText());
+        assertEquals("d/h", args.get("c").asText());
     }
 
     @Test
