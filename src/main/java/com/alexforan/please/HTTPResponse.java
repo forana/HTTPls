@@ -73,7 +73,7 @@ public class HTTPResponse {
      * Convenience helper that checks if the response is within the 200 (acceptable) range.
      */
     public boolean isOk() {
-        return getStatus() >= 200 && getStatus() <= 200;
+        return getStatus() >= 200 && getStatus() < 300;
     }
 
     /**

@@ -22,6 +22,17 @@ public class HTTPResponseTest {
     }
 
     @Test
+    public void testIsOk() throws HTTPException {
+        HTTPResponse response = Please.get("http://httpbin.org/status/418").send();
+        assertFalse(response.isOk());
+        for (int status : new int[] { 200, 201, 202, 204 }) {
+            response = Please.get("http://httpbin.org/status/" + status).send();
+            assertEquals(status, response.getStatus());
+            assertTrue(response.isOk());
+        }
+    }
+
+    @Test
     public void testGetHeader() throws HTTPException {
         HTTPResponse response = Please.get("http://httpbin.org/get").sendAndVerify();
         assertEquals("*", response.getHeader("Access-Control-Allow-Origin"));
