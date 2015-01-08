@@ -35,7 +35,17 @@ dependencies {
 fatJar {
 }
 
-task createPom << {
+task sourceJar (type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar (type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task buildJCenter(dependsOn: [jar, sourceJar, javadocJar]) << {
     pom {
         project {
             artifactId = project.name
@@ -47,5 +57,5 @@ task createPom << {
                 }
             }
         }
-    }.writeTo("pom.xml")
+    }.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
 }
