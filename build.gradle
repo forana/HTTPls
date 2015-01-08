@@ -33,6 +33,7 @@ dependencies {
 }
 
 fatJar {
+    classifier = 'fat'
 }
 
 task sourceJar (type: Jar, dependsOn: classes) {
