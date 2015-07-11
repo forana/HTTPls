@@ -10,12 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
@@ -97,6 +97,17 @@ public class HTTPRequest {
     public HTTPRequest parameter(String key, Object value) {
         parameters.add(new BasicNameValuePair(key, value.toString()));
         return this;
+    }
+
+    /**
+     * Set HTTP Basic auth credentials for this request.
+     * 
+     * @param username
+     * @param password
+     * @return this
+     */
+    public HTTPRequest basicAuth(String username, String password) {
+        return header("Authorization", "Basic " + new String(Base64.encodeBase64((username + ":" + password).getBytes())));
     }
 
     /**
@@ -305,6 +316,7 @@ public class HTTPRequest {
             request = new ArbitraryMethodRequestWithBody(method, entity);
         }
         request.setURI(uri);
+
         return request;
     }
 }

@@ -13,9 +13,6 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import com.alexforan.please.Form;
-import com.alexforan.please.MultipartFormData;
-import com.alexforan.please.Please;
 import com.alexforan.please.exceptions.HTTPException;
 import com.alexforan.please.exceptions.HTTPRequestException;
 import com.alexforan.please.exceptions.HTTPResponseException;
@@ -40,13 +37,13 @@ public class HTTPRequestTest {
     public void testCertificateVerification() throws HTTPException {
         // this should throw an exception
         try {
-            Please.get("https://httpbin.herokuapp.com").send();
+            Please.get("https://tv.eurosport.com/").send();
             fail("Expected a certificate failure");
         } catch (HTTPRequestException e) {
         }
 
         // this shouldn't throw an exception
-        Please.get("https://httpbin.herokuapp.com")
+        Please.get("https://tv.eurosport.com/")
                 .setVerifyCertificates(false)
                 .send();
     }
@@ -59,6 +56,25 @@ public class HTTPRequestTest {
         } catch (HTTPRequestException e) {
             assertTrue(e.getCause() instanceof URISyntaxException);
         }
+    }
+    
+    @Test
+    public void testNegativeBasicAuth() throws HTTPException {
+        HTTPResponse response = Please
+                .get("http://httpbin.org/basic-auth/hello/hey")
+                .basicAuth("this", "isn't right")
+                .send();
+        assertEquals(401, response.getStatus());
+    }
+
+    @Test
+    public void testPositiveBasicAuth() throws HTTPException {
+        HTTPRequest request = Please
+                .get("http://httpbin.org/basic-auth/hello/hey")
+                .basicAuth("hello", "hey");
+        HTTPResponse response = request.send();
+        response.isOk();
+        assertTrue(response.isOk());
     }
 
     @Test
